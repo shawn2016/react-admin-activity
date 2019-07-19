@@ -191,16 +191,6 @@ const menus = [
     conditions: 1
   },
   {
-    id: 10,
-    title: "活动模板",
-    icon: "fire",
-    url: "/activity/activitylist_page",
-    parent: null,
-    desc: "活动管理/活动模板",
-    sorts: 1,
-    conditions: 1
-  },
-  {
     id: 11,
     title: "活动编辑",
     icon: "fire",

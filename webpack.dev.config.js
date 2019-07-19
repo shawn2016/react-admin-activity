@@ -15,7 +15,7 @@ module.exports = {
     './dll/vendor.dll.js',
   ],
   output: {
-    path: __dirname + '/', // 将打包好的文件放在此路径下，dev模式中，只会在内存中存在，不会真正的打包到此路径
+    path: __dirname, // 将打包好的文件放在此路径下，dev模式中，只会在内存中存在，不会真正的打包到此路径
     publicPath: PUBLIC_PATH, // 文件解析路径，index.html中引用的路径会被设置为相对于此路径
     filename: 'bundle.js', // 编译后的文件名字
   },
@@ -85,14 +85,14 @@ module.exports = {
         PUBLIC_URL: PUBLIC_PATH,
       }),
     }),
-    new webpack.DllReferencePlugin({
-      context: __dirname,
-      /**
-           下面这个地址对应webpack.dll.config.js中生成的那个json文件的路径
-           这样webpack打包时，就先直接去这个json文件中把那些预编译的资源弄进来
-           **/
-      manifest: require('./dll/vendor-manifest.json'),
-    }),
+    // new webpack.DllReferencePlugin({
+    //   context: __dirname,
+    //   /**
+    //        下面这个地址对应webpack.dll.config.js中生成的那个json文件的路径
+    //        这样webpack打包时，就先直接去这个json文件中把那些预编译的资源弄进来
+    //        **/
+    //   manifest: require('./dll/vendor-manifest.json'),
+    // }),
     new HappyPack({
       loaders: ['babel-loader'],
     }),
@@ -100,12 +100,12 @@ module.exports = {
       // 根据模板插入css/js等生成最终HTML
       filename: 'index.html', //生成的html存放路径，相对于 output.path
       favicon: './public/favicon.png', // 自动把根目录下的favicon.ico图片加入html
-      template: './public/index.ejs', //html模板路径
+      template: './src/index.html', //html模板路径
       inject: true, // 是否将js放在body的末尾
-      templateParameters: {
-        dll: "<script src='/vendor.dll.js'></script>",
-        manifest: '',
-      },
+    //   templateParameters: {
+    //     dll: "<script src='/vendor.dll.js'></script>",
+    //     manifest: '',
+    //   },
     }),
     // 自动生成各种类型的favicon，这么做是为了以后各种设备上的扩展功能，比如PWA桌面图标
     new FaviconsWebpackPlugin({

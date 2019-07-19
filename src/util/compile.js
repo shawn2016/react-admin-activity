@@ -2,6 +2,7 @@ import path from "path";
 import webpack from "webpack";
 import fs from "fs";
 import ncp from "ncp";
+const TerserPlugin = require('terser-webpack-plugin'); // 优化js
 
 const AUTOPREFIXER_BROWSERS = [
   "Android 2.3",
@@ -15,6 +16,49 @@ const AUTOPREFIXER_BROWSERS = [
 ];
 
 const rules = [
+  //   {
+  //     test: /\.js$/,
+  //     exclude: /node_modules/,
+  //     loader: "babel-loader",
+  //     options: {
+  //       plugins: [
+  //         ["import", { style: true, libraryName: "antd-mobile" }],
+  //         "transform-decorators-legacy",
+  //         "transform-class-properties"
+  //       ]
+  //     }
+  //   },
+  //   { test: /\.json$/, loader: "json-loader" },
+  //   //   { test: /\.txt$/, loader: "raw-loader" },
+  //   {
+  //     test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
+  //     loader: "url-loader?limit=1024"
+  //   },
+  //   { test: /\.(eot|ttf|wav|mp3)$/, loader: "file-loader" },
+  //   {
+  //     test: /\.scss$/,
+  //     loader: "style-loader/useable!css-loader!sass-loader!postcss-loader"
+  //   },
+  //   {
+  //     test: /\.less$/,
+
+  //     use: ["style-loader", "css-loader", "postcss-loader", "less-loader"]
+  //   },
+  //   { test: /\.css$/, loader: "style-loader/useable!css-loader!postcss-loader" }
+
+  //   {
+  //     // 编译前通过eslint检查代码 (注释掉即可取消eslint检测)
+  //     test: /\.js?$/,
+  //     enforce: 'pre',
+  //     use: ['eslint-loader'],
+  //     include: path.resolve(__dirname, 'src'),
+  //   },
+//   {
+//     // .js .jsx用babel解析
+//     test: /\.js?$/,
+//     use: ["happypack/loader"],
+//     include: path.resolve(__dirname, "../../src")
+//   },
   {
     test: /\.js$/,
     exclude: /node_modules/,
@@ -27,23 +71,50 @@ const rules = [
       ]
     }
   },
-  { test: /\.json$/, loader: "json-loader" },
-  //   { test: /\.txt$/, loader: "raw-loader" },
   {
-    test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
-    loader: "url-loader?limit=1024"
+    // .css 解析
+    test: /\.css$/,
+    use: ["style-loader", "css-loader", "postcss-loader"]
   },
-  { test: /\.(eot|ttf|wav|mp3)$/, loader: "file-loader" },
   {
+    // .scss 解析
     test: /\.scss$/,
-    loader: "style-loader/useable!css-loader!sass-loader!postcss-loader"
+    use: ["style-loader", "css-loader", "postcss-loader", "sass-loader"]
   },
   {
+    // .less 解析
     test: /\.less$/,
-
-    use: ["style-loader", "css-loader", "postcss-loader", "less-loader"]
+    use: [
+      "style-loader",
+      "css-loader",
+      "postcss-loader",
+      { loader: "less-loader", options: { javascriptEnabled: true } }
+    ]
   },
-  { test: /\.css$/, loader: "style-loader/useable!css-loader!postcss-loader" }
+  {
+    // 文件解析
+    test: /\.(eot|woff|otf|svg|ttf|woff2|appcache|mp3|mp4|pdf)(\?|$)/,
+    include: path.resolve(__dirname, "src"),
+    use: ["file-loader?name=assets/[name].[hash:4].[ext]"]
+  },
+  {
+    // 图片解析
+    test: /\.(png|jpg|gif)(\?|$)/,
+    include: path.resolve(__dirname, "../../src"),
+    use: ["url-loader?limit=8192&name=assets/[name].[hash:4].[ext]"]
+  },
+  {
+    // wasm文件解析
+    test: /\.wasm$/,
+    include: path.resolve(__dirname, "../../src"),
+    type: "webassembly/experimental"
+  },
+  {
+    // xml文件解析
+    test: /\.xml$/,
+    include: path.resolve(__dirname, "../../src"),
+    use: ["xml-loader"]
+  }
 ];
 
 const plugins = [];
@@ -58,18 +129,33 @@ async function compileComponent(project, name, optimize) {
     name,
     outputFileName
   );
+  console.log("----------3");
   const outputPath = path.join(
     __dirname,
     "../../publish/",
     projectPrefix,
     name
   );
+  console.log("----------0");
   var config = {
+    mode: "development",
     entry: entryPath,
     output: {
       path: outputPath,
       filename: outputFileName
     },
+    optimization: {
+        minimizer: [
+          new TerserPlugin({
+            parallel: true, // 多线程并行构建
+            terserOptions: {
+              output: {
+                comments: false, // 不保留注释
+              },
+            },
+          }),
+        ],
+      },
     module: {
       rules: rules
     },
@@ -77,9 +163,11 @@ async function compileComponent(project, name, optimize) {
   };
 
   var compiler = webpack(config);
+  console.log("----------1");
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
       if (err) {
+        console.log("----------2");
         reject(err);
       } else {
         const fileContent = fs.readFileSync(

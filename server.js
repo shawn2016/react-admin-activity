@@ -36,9 +36,11 @@ dbConnection.on("error", error => {
 dbConnection.once("open", () => {
   console.log("database connected: ", dbUri);
 });
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// app.use(express.static("dll"));
+app.use(express.static(path.join(__dirname, "./src/public")));
+app.use(express.static(path.join(__dirname, "./publish")));
+app.use(bodyParser.json({ limit: "10000 kB" }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 if (env === "production") {
   // 如果是生产环境，则运行build文件夹中的代码
@@ -48,7 +50,6 @@ if (env === "production") {
   });
 } else {
   const compiler = webpack(webpackConfig); // 实例化webpack
-  app.use(express.static("dll"));
   app.use(
     webpackDevMiddleware(compiler, {
       // 挂载webpack小型服务器
