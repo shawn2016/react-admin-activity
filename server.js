@@ -36,7 +36,7 @@ dbConnection.on("error", error => {
 dbConnection.once("open", () => {
   console.log("database connected: ", dbUri);
 });
-// app.use(express.static("dll"));
+app.use(express.static("dll"));
 app.use(express.static(path.join(__dirname, "./src/public")));
 app.use(express.static(path.join(__dirname, "./publish")));
 app.use(bodyParser.json({ limit: "10000 kB" }));
