@@ -1,0 +1,28 @@
+.home {
+  display: flex;
+  .previewIframe {
+    margin: 10px auto 0;
+    width: 414px;
+    height: 736px;
+    overflow: auto;
+    box-sizing: content-box;
+    border-width: 30px 15px 60px 15px;
+    border-color: #a7222b;
+    border-style: solid;
+    border-radius: 20px;
+  }
+  .leftActivity {
+    float: left;
+    min-width: 456px;
+    margin: 16px;
+  }
+  .rightActivity {
+    position: relative;
+    float: left;
+    background: #fff;
+    width: 100%;
+  }
+  .TabPaneItem {
+    padding: 0 15px;
+  }
+}

@@ -1,0 +1,253 @@
+.modal {
+  .mask {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    margin: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+  }
+  .modalWrapper {
+    position: fixed;
+    width: 6.2rem;
+    height: 6.8rem;
+    border-radius: 0.1rem;
+    padding: 0.26rem 0.3rem 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background-color: #fff;
+    box-sizing: border-box;
+
+    h2 {
+      text-align: center;
+      font-size: 0.36rem;
+      color: #333;
+      margin-bottom: 0.16rem;
+    }
+
+    ol {
+      height: 5.5rem;
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    li {
+      font-size: 0.3rem;
+      color: #6c6c6c;
+      &.redText {
+        font-size: 0.3rem;
+        font-weight: 500;
+        text-align: center;
+        color: rgb(250, 62, 33);
+        line-height: 0.42rem;
+      }
+    }
+    .closeBtn {
+      width: 0.68rem;
+      height: 0.68rem;
+      position: absolute;
+      bottom: -1rem;
+      left: 50%;
+      transform: translate(-50%, 0%);
+    }
+  }
+}
+.main {
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    rgba(250, 97, 72, 1) 0%,
+    rgba(250, 50, 19, 1) 100%
+  );
+  .activity_bg {
+    width: 100%;
+    // z-index: -1;
+  }
+  .rule {
+    position: absolute;
+    right: 0;
+    top: 0.16rem;
+    color: #fa5535;
+    font-size: 0.3rem;
+    width: 1.66rem;
+    height: 0.51rem;
+    background: #ffeb36;
+    border-radius: 0.26rem 0 0 0.26rem;
+    line-height: 0.51rem;
+    text-align: center;
+    z-index: 2;
+  }
+  .couponContainer {
+    position: relative;
+    z-index: 1;
+    .couponBox {
+      padding: 0.42rem 0.48rem 0.3rem;
+      background: #fff;
+      border-radius: 0.2rem;
+      margin: 0 0.4rem;
+      .couponTit {
+        font-size: 0.26rem;
+        color: rgba(230, 41, 99, 1);
+        span {
+          font-size: 0.3rem;
+          font-weight: 600;
+        }
+      }
+      .imgContainer {
+        position: relative;
+        margin-top: 0.44rem;
+      }
+      .couponBg {
+        width: 100%;
+      }
+      .getBtn {
+        position: absolute;
+        width: 1.04rem;
+        right: 0.18rem;
+        top: 0.24rem;
+      }
+    }
+  }
+  .mt_500 {
+    margin-top: -4.5rem;
+  }
+  .card_box {
+    margin: 0 auto;
+    text-align: center;
+    img {
+      position: relative;
+      width: 95%;
+      display: inline-block;
+    }
+  }
+  .btn_box {
+    margin-top: -0.1rem;
+    text-align: center;
+    a {
+      width: 5.4rem;
+      display: inline-block;
+      font-family: "PingFangSC-Semibold";
+      font-weight: 600;
+      color: rgba(168, 23, 0, 1);
+      line-height: 0.5rem;
+      text-decoration: none;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 239, 51, 1) 0%,
+        rgba(253, 173, 88, 1) 100%
+      );
+      box-shadow: 0 0.04rem 0.1rem 0 rgba(123, 26, 11, 0.6),
+        0 -0.03rem 0.15rem 0 rgba(255, 255, 255, 0.26);
+      border-radius: 0.59rem;
+      padding: 0.2rem;
+
+      animation-name: breath; /* 动画名称 */
+      animation-duration: 1s; /* 动画时长3秒 */
+      animation-timing-function: ease-in-out; /* 动画速度曲线：以低速开始和结束 */
+      animation-iteration-count: infinite; /* 播放次数：无限 */
+
+      /* Safari and Chrome */
+      -webkit-animation-name: breath; /* 动画名称 */
+      -webkit-animation-duration: 1s; /* 动画时长3秒 */
+      -webkit-animation-timing-function: ease-in-out; /* 动画速度曲线：以低速开始和结束 */
+      -webkit-animation-iteration-count: infinite; /* 播放次数：无限 */
+    }
+  }
+  @keyframes breath {
+    from {
+      transform: scale(0.95);
+    } /* 动画开始时 */
+    50% {
+      transform: scale(1.05);
+    } /* 动画50% 时 */
+    to {
+      transform: scale(0.95);
+    } /* 动画结束时 */
+  }
+
+  @-webkit-keyframes breath {
+    from {
+      transform: scale(0.95);
+    } /* 动画开始时 */
+    50% {
+      transform: scale(1.05);
+    } /* 动画50% 时 */
+    to {
+      transform: scale(0.95);
+    } /* 动画结束时的 */
+  }
+  .btn_bottom_text {
+    text-align: center;
+    font-size: 0.3rem;
+    font-family: "PingFangSC-Semibold";
+    font-weight: 400;
+    color: rgba(255, 255, 255, 1);
+    margin: 0.2rem 0 0.6rem;
+  }
+  .footer_text {
+    line-height: 0.37rem;
+    padding: 0 0.3rem;
+    margin-top: -0.1rem;
+    font-size: 0.26rem;
+    span {
+      color: #feee3a;
+    }
+  }
+  .footer_b_text {
+    font-size: 0.34rem;
+    text-align: center;
+    font-family: "PingFangSC-Regular";
+    font-weight: 400;
+    color: rgba(255, 255, 255, 1);
+    line-height: 0.55rem;
+    margin-top: 0.6rem;
+  }
+  .footer_h_text {
+    text-align: center;
+    padding: 0 0 0.4rem;
+    width: 5rem;
+    margin: 0.7rem auto 0;
+    border-top: 1px solid #fff;
+    font-size: 0.24rem;
+    font-family: "PingFangSC-Regular";
+    font-weight: 400;
+    color: rgba(255, 255, 255, 1);
+    line-height: 0.33rem;
+    .text {
+      display: inline-block;
+      position: relative;
+      top: -0.18rem;
+      padding: 0 0.1rem;
+      background: #fa3314;
+    }
+  }
+  .tipText {
+    text-align: center;
+  }
+  .tipWrapper {
+    width: 5rem;
+    height: 2rem;
+  }
+}
+
+@keyframes slide {
+  0% {
+    top: 2.8rem;
+  }
+  100% {
+    top: 0.5rem;
+  }
+}
+
+@keyframes shake {
+  0% {
+    top: 0;
+  }
+  100% {
+    top: 0.15rem;
+  }
+}

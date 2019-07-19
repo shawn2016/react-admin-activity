@@ -25,14 +25,32 @@ import "./BasicLayout.scss";
 // 路由
 // ==================
 
-const [NotFound, NoPower, Home, MenuAdmin, PowerAdmin, RoleAdmin, UserAdmin] = [
+const [
+  NotFound,
+  NoPower,
+  Home,
+  MenuAdmin,
+  PowerAdmin,
+  RoleAdmin,
+  UserAdmin,
+  activitylist_page,
+  myactivity_page,
+  templateactivity_page,
+  previewactivity_page,
+  editactivity_page
+] = [
   () => import(`../a_container/ErrorPages/404`),
   () => import(`../a_container/ErrorPages/401`),
   () => import(`../a_container/home`),
   () => import(`../a_container/System/MenuAdmin`),
   () => import(`../a_container/System/PowerAdmin`),
   () => import(`../a_container/System/RoleAdmin`),
-  () => import(`../a_container/System/UserAdmin`)
+  () => import(`../a_container/System/UserAdmin`),
+  () => import(`../a_container/activity/activitylist_page`),
+  () => import(`../a_container/activity/myactivity_page`),
+  () => import(`../a_container/activity/templateactivity_page`),
+  () => import(`../a_container/activity/editactivity_page`),
+  () => import(`../a_container/activity/previewactivity_page`)
 ].map(item => {
   return Loadable({
     loader: item,
@@ -191,6 +209,31 @@ export default class AppContainer extends React.Component {
                 exact
                 path="/system/useradmin"
                 render={props => this.onEnter(UserAdmin, props)}
+              />
+              <Route
+                exact
+                path="/activity/activitylist_page"
+                component={activitylist_page}
+              />
+              <Route
+                exact
+                path="/activity/myactivity_page"
+                component={myactivity_page}
+              />
+              <Route
+                exact
+                path="/activity/templateactivity_page"
+                component={templateactivity_page}
+              />
+              <Route
+                exact
+                path="/activity/previewactivity_page"
+                component={previewactivity_page}
+              />
+              <Route
+                exact
+                path="/activity/editactivity_page"
+                component={editactivity_page}
               />
               <Route exact path="/nopower" component={NotFound} />
               <Route component={NotFound} />

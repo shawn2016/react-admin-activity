@@ -7,12 +7,35 @@ const webpack = require("webpack"); // webpack核心
 const webpackDevMiddleware = require("webpack-dev-middleware"); // webpack服务器
 const webpackHotMiddleware = require("webpack-hot-middleware"); // HMR热更新中间件
 const webpackConfig = require("./webpack.dev.config.js"); // webpack开发环境的配置文件
+const proxy = require("http-proxy-middleware");
+import mongoose from "mongoose";
 
 const mock = require("./mock/app-data"); // mock模拟数据，模拟后台业务
 
 const app = express(); // 实例化express服务
 const DIST_DIR = webpackConfig.output.path; // webpack配置中设置的文件输出路径，所有文件存放在内存中
-const PORT = 8888; // 服务启动端口号
+const PORT = 8889; // 服务启动端口号
+
+//重点在这一句，赋值一个全局Promise
+mongoose.Promise = global.Promise;
+// todo: move to config/database.js
+const dbHost = process.env["MONGODB_PORT_27017_TCP_ADDR"] || "localhost";
+const dbPort = process.env["MONGODB_PORT_27017_TCP_PORT"] || 27017;
+const dbName = process.env["MONGODB_INSTANCE_NAME"] || "pager";
+const dbUsername = process.env["MONGODB_USERNAME"] || "pager";
+const dbPassword = process.env["MONGODB_PASSWORD"] || "pass4pager";
+const dbUri = "mongodb://" + dbHost + ":" + dbPort + "/" + dbName;
+const dbOptions = {
+  user: dbUsername,
+  pass: dbPassword
+};
+const dbConnection = mongoose.connection.openUri(dbUri, dbOptions);
+dbConnection.on("error", error => {
+  throw error;
+});
+dbConnection.once("open", () => {
+  console.log("database connected: ", dbUri);
+});
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -39,6 +62,19 @@ if (env === "production") {
   );
   // 挂载HMR热更新中间件
   app.use(webpackHotMiddleware(compiler));
+  app.use("/api/projects", require("./src/api/projects"));
+//   app.use("/api/generate", require("./src/api/generate"));
+  app.use("/api/components", require("./src/api/components"));
+  app.use("/api/sync", require("./src/api/sync"));
+  app.use("/api/pages", require("./src/api/pages"));
+  app.use("/api/preview", require("./src/api/pages"));
+  app.use(
+    proxy("/wap", {
+      target: "https://lns-wap-test.vbillbank.com/wap", //跨域地址
+      pathRewrite: { "^/wap": "" }, //重写接口
+      changeOrigin: true
+    })
+  );
   // 所有请求都返回index.html
   app.get("*", (req, res, next) => {
     const filename = path.join(DIST_DIR, "index.html");

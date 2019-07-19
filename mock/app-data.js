@@ -158,6 +158,69 @@ const menus = [
     desc: "系统管理/菜单管理",
     sorts: 3,
     conditions: 1
+  },
+  //
+  {
+    id: 7,
+    title: "活动模板",
+    icon: "fire",
+    url: "/activity/activitylist_page",
+    parent: null,
+    desc: "活动管理/活动模板",
+    sorts: 1,
+    conditions: 1
+  },
+  {
+    id: 8,
+    title: "我的活动",
+    icon: "profile",
+    url: "/activity/myactivity_page",
+    parent: null,
+    desc: "活动管理/我的活动",
+    sorts: 1,
+    conditions: 1
+  },
+  {
+    id: 9,
+    title: "组件列表",
+    icon: "apartment",
+    url: "/activity/templateactivity_page",
+    parent: null,
+    desc: "活动管理/组件列表",
+    sorts: 1,
+    conditions: 1
+  },
+  {
+    id: 10,
+    title: "活动模板",
+    icon: "fire",
+    url: "/activity/activitylist_page",
+    parent: null,
+    desc: "活动管理/活动模板",
+    sorts: 1,
+    conditions: 1
+  },
+  {
+    id: 11,
+    title: "活动编辑",
+    icon: "fire",
+    hideMenu: true,
+    url: "/activity/editactivity_page",
+    parent: null,
+    desc: "活动管理/活动编辑",
+    sorts: 1,
+    conditions: 1
+  },
+  {
+    id: 12,
+    title: "活动预览",
+    icon: "fire",
+    hideMenu: true,
+    url: "/activity/previewactivity_page",
+    parent: null,
+    desc: "活动管理/活动预览",
+    sorts: 1,
+    conditions: 1
   }
 ];
 
@@ -327,6 +390,60 @@ const powers = [
     desc: "菜单管理 - 删除权限",
     sorts: 2,
     conditions: 1
+  },
+  {
+    id: 18,
+    menu: 7,
+    title: "删除",
+    code: "menu:del",
+    desc: "菜单管理 - 删除权限",
+    sorts: 2,
+    conditions: 1
+  },
+  {
+    id: 19,
+    menu: 8,
+    title: "删除",
+    code: "menu:del",
+    desc: "菜单管理 - 删除权限",
+    sorts: 2,
+    conditions: 1
+  },
+  {
+    id: 20,
+    menu: 9,
+    title: "删除",
+    code: "menu:del",
+    desc: "菜单管理 - 删除权限",
+    sorts: 2,
+    conditions: 1
+  },
+  {
+    id: 21,
+    menu: 10,
+    title: "删除",
+    code: "menu:del",
+    desc: "菜单管理 - 删除权限",
+    sorts: 2,
+    conditions: 1
+  },
+  {
+    id: 22,
+    menu: 11,
+    title: "删除",
+    code: "menu:del",
+    desc: "菜单管理 - 删除权限",
+    sorts: 2,
+    conditions: 1
+  },
+  {
+    id: 23,
+    menu: 12,
+    title: "删除",
+    code: "menu:del",
+    desc: "菜单管理 - 删除权限",
+    sorts: 2,
+    conditions: 1
   }
 ];
 // 所有的角色数据
@@ -343,7 +460,13 @@ const roles = [
       { menuId: 3, powers: [1, 2, 3, 4, 5] },
       { menuId: 4, powers: [6, 7, 8, 9, 18] },
       { menuId: 5, powers: [10, 11, 12, 13] },
-      { menuId: 6, powers: [14, 15, 16, 17] }
+      { menuId: 6, powers: [14, 15, 16, 17] },
+      { menuId: 7, powers: [] },
+      { menuId: 8, powers: [] },
+      { menuId: 9, powers: [] },
+      { menuId: 10, powers: [] },
+      { menuId: 11, powers: [] },
+      { menuId: 12, powers: [] }
     ]
   },
   {
